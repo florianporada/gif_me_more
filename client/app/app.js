@@ -25,7 +25,7 @@ import socket from '../components/socket/socket.service';
 import './app.scss';
 
 angular.module('gifMeMoreApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
-  uiBootstrap, navbar, footer, main, constants, socket, util
+  uiBootstrap, navbar, footer, main, constants, socket, util, 'LocalStorageModule'
 ])
   .config(routeConfig);
 

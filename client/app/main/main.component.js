@@ -12,16 +12,18 @@ export class MainController {
   trends = [];
   search = '';
   newThing = '';
+  uuid = '';
   loadingLocation = false;
   loadingTrends = false;
   loadingGifs = false;
   nothingFound = false;
 
-loaded = false;
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, $window, socket, localStorageService) {
     this.$http = $http;
+    this.$window = $window;
     this.socket = socket;
+    this.localStorageService = localStorageService;
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -33,21 +35,37 @@ loaded = false;
   }
 
   $onInit() {
+    if(this.getItemFromLocalStorage('uuid') === null) {
+      this.$http.get('/api/gifs/uuid/1')
+        .then(res => {
+          console.log(res);
+          this.submitToLocalStorage('uuid', res.data);
+        });
+    }
+
+    this.uuid = this.getItemFromLocalStorage('uuid');
+    this.$http.get(`/api/gifs/${this.uuid}`)
+      .then(response => {
+        this.loaded = true;
+        this.savedGifs = response.data;
+        this.socket.syncUpdates('gif', this.savedGifs);
+      });
+
     this.$http.get('/api/things')
       .then(response => {
         this.awesomeThings = response.data;
         this.socket.syncUpdates('thing', this.awesomeThings);
       });
 
-    this.$http.get('/api/gifs')
-      .then(response => {
-        console.log(response);
-        this.loaded = true;
-        this.savedGifs = response.data;
-        this.socket.syncUpdates('gif', this.savedGifs);
-      });
-
     this.getPlacesByLocation();
+  }
+
+  submitToLocalStorage(key, val) {
+    return this.localStorageService.set(key, val);
+  }
+
+  getItemFromLocalStorage(key) {
+    return this.localStorageService.get(key);
   }
 
   getGifs(trend) {
@@ -56,7 +74,7 @@ loaded = false;
     }
     let searchTerms = this.search.split(',').map(function(item) {
       return item
-        .replace(' ', '+')
+        .replace(/\s/g, '+')
         .replace('#', '')
         .trim();
     });
@@ -118,6 +136,7 @@ loaded = false;
   saveGif(gif) {
     const saveGif = {
       name: gif.slug,
+      uuid: this.uuid,
       associatedTrend: this.activeTrend,
       gif
     };
@@ -131,8 +150,20 @@ loaded = false;
     });
   }
 
+  deleteGif(gif, index) {
+    this.$http.delete(`/api/gifs/${gif._id}`).then(res => {
+      this.savedGifs.splice(index, 1);
+    }, err => {
+      if(err) {
+        console.log(err);
+      }
+    });
+  }
+
   shareGif(gif) {
     console.log(gif);
+    const url = `http://twitter.com/share?text=Oi&url=${gif.gif.bitly_url}&hashtags=${gif.associatedTrend.replace(/\s/g, '')}`;
+    this.$window.open(url, '_blank');
   }
 
   getRandomBackground() {

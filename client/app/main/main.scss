@@ -52,7 +52,7 @@
     height: auto;
   }
 
-  .save, .share {
+  .right, .left {
     &:hover {
       opacity: 1;
       background-color: rgba(200,200,200,0.5);
@@ -75,11 +75,11 @@
     }
   }
 
-  .share {
+  .right {
     right: 15px;
   }
 
-  .save {
+  .left {
     left: 15px;
   }
 }

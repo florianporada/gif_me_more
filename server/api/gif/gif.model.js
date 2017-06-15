@@ -5,7 +5,7 @@ import {registerEvents} from './gif.events';
 
 var GifSchema = new mongoose.Schema({
   name: String,
-  user: mongoose.Schema.Types.ObjectId,
+  uuid: String,
   gif: Object,
   associatedTrend: String,
 });

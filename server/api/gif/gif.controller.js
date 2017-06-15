@@ -13,6 +13,7 @@
 import jsonpatch from 'fast-json-patch';
 import Gif from './gif.model';
 import request from 'request';
+import uuidV4 from 'uuid/v4';
 
 function getGiphyGifs(searchTerms) {
   const apiKey = 'dc6zaTOxFJmzC';
@@ -40,9 +41,6 @@ function getGiphyGifs(searchTerms) {
         result = result.concat(body.data);
 
         if(i == searchTerms.length - 1) {
-          console.log('results111');
-          console.log(result);
-          console.log(result.length);
           return resolve(result);
         }
       });
@@ -101,9 +99,9 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Gifs
+// Gets a list of Gifs based on uuid
 export function index(req, res) {
-  return Gif.find().exec()
+  return Gif.find({uuid: req.params.uuid}).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -159,4 +157,9 @@ export function getGifs(req, res) {
   return getGiphyGifs(req.params.search_terms).then(data => {
     res.status(200).send(data);
   });
+}
+
+// Gets random UUID to identify user
+export function getUuid(req, res) {
+  return res.status(200).send(uuidV4());
 }

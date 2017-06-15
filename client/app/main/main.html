@@ -61,10 +61,10 @@
       <img src="assets/images/nothing_found.gif" alt="nothing found!" class="img-responsive center-block">
     </div>
     <div class="col-md-4 col-lg-4 col-sm-6 gif" ng-repeat="gif in $ctrl.gifs">
-      <div class="save" ng-click="$ctrl.saveGif(gif)">
+      <div class="left" ng-click="$ctrl.saveGif(gif)">
         <img src="assets/images/save.png" alt="">
       </div>
-      <div class="share" ng-click="$ctrl.shareGif(gif)">
+      <div class="right" ng-click="$ctrl.shareGif(gif)">
         <img src="assets/images/share.png" alt="">
       </div>
       <!-- <pre>{{gif.images.original.url}}</pre> -->
@@ -80,6 +80,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 col-lg-4 col-sm-6 gif" ng-repeat="gif in $ctrl.savedGifs">
+      <div class="left" ng-click="$ctrl.deleteGif(gif, $index)">
+        <img src="assets/images/delete.png" alt="">
+      </div>
+      <div class="right" ng-click="$ctrl.shareGif(gif)">
+        <img src="assets/images/share.png" alt="">
+      </div>
       <img src="{{gif.gif.images.original.url}}" />
     </div>
   </div>
