@@ -152,6 +152,7 @@ export class MainController {
 
   deleteGif(gif, index) {
     this.$http.delete(`/api/gifs/${gif._id}`).then(res => {
+      console.log(res);
       this.savedGifs.splice(index, 1);
     }, err => {
       if(err) {
@@ -162,7 +163,18 @@ export class MainController {
 
   shareGif(gif) {
     console.log(gif);
-    const url = `http://twitter.com/share?text=Oi&url=${gif.gif.bitly_url}&hashtags=${gif.associatedTrend.replace(/\s/g, '')}`;
+    let gifUrl = '';
+    let associatedTrend = '';
+
+    if(gif.gif === undefined) {
+      console.log('undefined');
+      gifUrl = gif.bitly_url;
+    } else {
+      gifUrl = gif.gif.bitly_url;
+      associatedTrend = gif.associatedTrend.replace(/\s/g, '');
+    }
+
+    const url = `http://twitter.com/share?text=Oi&url=${gifUrl}&hashtags=${associatedTrend}`;
     this.$window.open(url, '_blank');
   }
 
