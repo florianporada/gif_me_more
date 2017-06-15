@@ -26,9 +26,9 @@
 
   <div class="row">
     <div ng-show="$ctrl.loadingLocation" class="col-xs-12 loading"></div>
-    <div class="col-lg-3 col-md-6 col-sm-12" ng-repeat="location in $ctrl.locations">
+    <div class="col-xs-12">
       <!-- <pre>{{location}}</pre> -->
-      <button type="button" class="btn btn-default" ng-click="$ctrl.getTrendsByPlace(location.woeid)">{{location.name}}</button>
+      <button ng-repeat="location in $ctrl.locations" type="button" class="btn btn-info btn-lg" ng-click="$ctrl.getTrendsByPlace(location.woeid)">{{location.name}}</button>
     </div>
   </div>
 

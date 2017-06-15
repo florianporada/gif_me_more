@@ -143,6 +143,7 @@ export class MainController {
 
   getTrendsByPlace(woeid) {
     this.loadingTrends = true;
+    this.trends = [];
     this.$http.get(`/api/twitter/trends/${woeid}`)
       .then(response => {
         this.loadingTrends = false;
