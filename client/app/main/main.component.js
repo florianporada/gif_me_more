@@ -49,6 +49,7 @@ export class MainController {
         this.loaded = true;
         this.savedGifs = response.data;
         this.socket.syncUpdates('gif', this.savedGifs);
+        this.setRandomBackground();
       });
 
     this.$http.get('/api/things')
@@ -123,7 +124,6 @@ export class MainController {
     this.loadingTrends = true;
     this.$http.get(`/api/twitter/trends/${woeid}`)
       .then(response => {
-        console.log(response);
         this.loadingTrends = false;
         this.trends = response.data[0].trends;
       });
@@ -166,11 +166,17 @@ export class MainController {
     this.$window.open(url, '_blank');
   }
 
-  getRandomBackground() {
-    if(!this.savedGifs.length === 0) {
-      const item = this.savedGifs[Math.floor(Math.random() * this.savedGifs.length)];
+  setRandomBackground() {
+    console.log(this.savedGifs.length);
+    if(this.savedGifs.length > 0) {
+      const elements = angular.element(document.getElementsByClassName('hero-unit'));
 
-      return `url('${item.gif.images.original.url}')`;
+      angular.forEach(elements, value => {
+        const element = angular.element(value);
+        const item = this.savedGifs[Math.floor(Math.random() * this.savedGifs.length)];
+
+        element.css('background-image', `url('${item.gif.images.original.url}')`);
+      });
     }
   }
 
