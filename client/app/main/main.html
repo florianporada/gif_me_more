@@ -77,7 +77,7 @@
     <h1>saved gifs</h1>
   </div>
 </div>
-<div class="container">
+<div class="container" ng-class="{true: 'is-mobile', false: ''}[$ctrl.isMobile()]">
   <div class="row">
     <div class="col-md-4 col-lg-4 col-sm-6 gif" ng-repeat="gif in $ctrl.savedGifs">
       <div class="left" ng-click="$ctrl.deleteGif(gif, $index)">
