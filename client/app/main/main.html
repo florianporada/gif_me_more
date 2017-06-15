@@ -1,0 +1,96 @@
+<header class="hero-unit" id="banner" style="background-image: {{$ctrl.getRandomBackground()}}">
+  <div class="container">
+    <h1>gif me more</h1>
+    <p class="lead">spice up the trends on twitter with some schwifty gifs</p>
+    <img src="assets/images/snoop_approved.png" alt="Snoop Dogg approved">
+  </div>
+</header>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Features:</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
+        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="$ctrl.deleteThing(thing)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div> -->
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12" ng-show="!$ctrl.loadingLocation">
+      <button class="btn btn-primary btn-lg btn-block" ng-click="$ctrl.getPlacesByLocation()">update location</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div ng-show="$ctrl.loadingLocation" class="col-xs-12 loading"></div>
+    <div class="col-lg-3 col-md-6 col-sm-12" ng-repeat="location in $ctrl.locations">
+      <!-- <pre>{{location}}</pre> -->
+      <button type="button" class="btn btn-default" ng-click="$ctrl.getTrendsByPlace(location.woeid)">{{location.name}}</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-show="$ctrl.loadingTrends" class="loading"></div>
+      <button ng-repeat="trend in $ctrl.trends" type="button" class="trends btn btn-default" ng-click="$ctrl.getGifByTrend(trend.name)">{{trend.name}}</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <form class="gif-form">
+        <label>get me some gifs:</label>
+        <p class="input-group">
+          <input type="text" class="form-control" placeholder="funny cats" ng-model="$ctrl.search">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary" ng-click="$ctrl.getGifs()">search</button>
+          </span>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div ng-show="$ctrl.loadingGifs" class="col-xs-12 loading"></div>
+    <div ng-show="$ctrl.nothingFound" class="col-xs-12 nothing-found">
+      <img src="assets/images/nothing_found.gif" alt="nothing found!" class="img-responsive center-block">
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-6 gif" ng-repeat="gif in $ctrl.gifs">
+      <div class="save" ng-click="$ctrl.saveGif(gif)">
+        <img src="assets/images/save.png" alt="">
+      </div>
+      <div class="share" ng-click="$ctrl.shareGif(gif)">
+        <img src="assets/images/share.png" alt="">
+      </div>
+      <!-- <pre>{{gif.images.original.url}}</pre> -->
+      <img src="{{gif.images.original.url}}" />
+    </div>
+  </div>
+</div>
+<div id="gallery" class="hero-unit" style="background-image: {{$ctrl.getRandomBackground()}}">
+  <div class="container">
+    <h1>saved gifs</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-6 gif" ng-repeat="gif in $ctrl.savedGifs">
+      <img src="{{gif.gif.images.original.url}}" />
+    </div>
+  </div>
+</div>
+
+<!-- <form class="thing-form">
+  <label>Syncs in realtime across clients</label>
+  <p class="input-group">
+    <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="$ctrl.newThing">
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-primary" ng-click="$ctrl.addThing()">Add New</button>
+    </span>
+  </p>
+</form> -->
