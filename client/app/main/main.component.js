@@ -59,6 +59,7 @@ export class MainController {
       });
 
     this.getPlacesByLocation();
+    this.shakeReload();
   }
 
   submitToLocalStorage(key, val) {
@@ -67,6 +68,17 @@ export class MainController {
 
   getItemFromLocalStorage(key) {
     return this.localStorageService.get(key);
+  }
+
+  shakeReload() {
+    window.ondevicemotion = event => {
+      var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10;
+      var accY = Math.round(event.accelerationIncludingGravity.y * 1);
+
+      if(accY > 50 || accX > 50) {
+        this.$window.location.reload();
+      }
+    };
   }
 
   getGifs(trend) {
@@ -179,7 +191,6 @@ export class MainController {
   }
 
   setRandomBackground() {
-    console.log(this.savedGifs.length);
     if(this.savedGifs.length > 0) {
       const elements = angular.element(document.getElementsByClassName('hero-unit'));
 
