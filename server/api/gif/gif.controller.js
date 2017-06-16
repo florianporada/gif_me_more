@@ -12,11 +12,12 @@
 
 import jsonpatch from 'fast-json-patch';
 import Gif from './gif.model';
+import env from './../../config/local.env';
 import request from 'request';
 import uuidV4 from 'uuid/v4';
 
 function getGiphyGifs(searchTerms) {
-  const apiKey = 'dc6zaTOxFJmzC';
+  const apiKey = env.GIPHY_API_KEY;
   let apiEndpoint = `http://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=`;
   let result = [];
   let options = {

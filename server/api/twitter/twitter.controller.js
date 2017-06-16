@@ -11,11 +11,12 @@
 'use strict';
 
 const request = require('request');
+const env = require('./../../config/local.env');
 
-const consumerKey = 'y4Tc1l54xkD6r8Zv4DU8IVA24';
-const consumerSecret = '3uqyWednL12XajCxo4OWnIdRLSrM597s6nnBrbdhDTFfBsBoAK';
+const consumerKey = env.TWITTER_CONSUMER_KEY;
+const consumerSecret = env.TWITTER_CONSUMER_SECRET;
 const encodeSecret = new Buffer(`${consumerKey}:${consumerSecret}`).toString('base64');
-let bearerToken = 'AAAAAAAAAAAAAAAAAAAAAAZr1AAAAAAAxermhu6G1OMk2JV7AmHpIWjSJeo%3DjSGAj4VBnd7jvQcmueNZexRFYQc1ivJHpzaUpRd7ykpMQhBUFI';
+let bearerToken = env.TWITTER_BEARER_TOKEN;
 
 function getBearerToken() {
   const options = {
