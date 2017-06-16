@@ -1,4 +1,6 @@
 # gif me more
+![Banner](docs/screen_frontend_banner.png)
+
 __get gifs from location based twitter trends__
 
 made by @florianporada
@@ -64,9 +66,14 @@ As mentioned above the app is based on NodeJS. So the server-side is completely 
 
 
 ####client-side
+
+![Walktrough](docs/walktrough.gif)
+
 On the client side AngularJS is used as a framework. The first time the app is opened in the browser in makes a call to the server which returns a unique ID, which is saved in you local storage of the used browser. The ID (e.g. `78c62999-0224-4f74-a7f7-2042324b014f`) is necessary to identify you as a user and get the gifs you save.
 Every time the app is opened afterwards the ID is send to the server which returns the saved gifs for this ID.
 
 Over the build in features of the browser the geolocation is tracked down and send to the server which then talks to the Twitter API for sending back the trending topics for the location.
 
-![Trends for Amsterdam](https://octodex.github.com/images/yaktocat.png)
+By clicking on one topic the associated gifs are displayed and can be saved or shared directly on twitter.
+
+The saved gifs are located on the lower end of the app and can also be shared on twitter or deleted because they are not dank anymore.
